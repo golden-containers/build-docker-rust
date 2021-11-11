@@ -20,4 +20,4 @@ docker build --tag ghcr.io/golden-containers/rust:1.56.1-bullseye 1.56.1/bullsey
 
 # Push
 
-docker push ghcr.io/golden-containers/rust:1.56.1-bullseye
+docker push ghcr.io/golden-containers/rust -a
