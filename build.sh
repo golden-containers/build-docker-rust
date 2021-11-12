@@ -5,6 +5,8 @@ rm -rf working
 mkdir working
 cd working
 
+GCI_URL="ghcr.io/golden-containers"
+
 # Checkout upstream
 
 git clone --depth 1 --branch master https://github.com/rust-lang/docker-rust.git
@@ -12,12 +14,14 @@ cd docker-rust
 
 # Transform
 
+GCI_REGEX_URL=$(echo ${GCI_URL} | sed 's/\//\\\//g')
+
 # This sed syntax is GNU sed specific
 [ -z $(command -v gsed) ] && GNU_SED=sed || GNU_SED=gsed
 
 ${GNU_SED} -i \
-    -e "1 s/FROM.*/FROM ghcr.io\/golden-containers\/buildpack-deps\:bullseye/; t" \
-    -e "1,// s//FROM ghcr.io\/golden-containers\/buildpack-deps\:bullseye/" \
+    -e "1 s/FROM.*/FROM ${GCI_REGEX_URL}\/buildpack-deps\:bullseye/; t" \
+    -e "1,// s//FROM ${GCI_REGEX_URL}\/buildpack-deps\:bullseye/" \
     1.56.1/bullseye/Dockerfile
 
 # Build
@@ -25,10 +29,10 @@ ${GNU_SED} -i \
 [ -z "${1:-}" ] && BUILD_LABEL_ARG="" || BUILD_LABEL_ARG=" --label \"${1}\" "
 
 BUILD_PLATFORM=" --platform linux/amd64 "
-GCI_URL="ghcr.io/golden-containers"
 BUILD_ARGS=" ${BUILD_LABEL_ARG} ${BUILD_PLATFORM} "
 
-docker build 1.56.1/bullseye/ --tag ${GCI_URL}/rust:1.56.1-bullseye ${BUILD_ARGS}
+docker build 1.56.1/bullseye/ ${BUILD_ARGS} \
+    --tag ${GCI_URL}/rust:1.56.1-bullseye
 
 # Push
 
