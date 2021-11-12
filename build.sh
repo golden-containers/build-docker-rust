@@ -13,7 +13,7 @@ cd docker-rust
 # Transform
 
 sed -i -e "1 s/FROM.*/FROM ghcr.io\/golden-containers\/buildpack-deps\:bullseye/; t" -e "1,// s//FROM ghcr.io\/golden-containers\/buildpack-deps\:bullseye/" 1.56.1/bullseye/Dockerfile
-echo "LABEL $1" >> 1.56.1/bullseye/Dockerfile
+echo "LABEL ${1:-DEBUG=TRUE}" >> 1.56.1/bullseye/Dockerfile
 
 # Build
 
