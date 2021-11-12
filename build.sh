@@ -19,7 +19,7 @@ ${GNU_SED} -i -e "1 s/FROM.*/FROM ghcr.io\/golden-containers\/buildpack-deps\:bu
 
 # Build
 
-docker build 1.56.1/bullseye/ --tag ghcr.io/golden-containers/rust:1.56.1-bullseye --label ${1:-DEBUG=TRUE}
+docker build 1.56.1/bullseye/ --platform linux/amd64 --tag ghcr.io/golden-containers/rust:1.56.1-bullseye --label ${1:-DEBUG=TRUE}
 
 # Push
 
