@@ -22,7 +22,12 @@ GCI_REGEX_URL=$(echo ${GCI_URL} | sed 's/\//\\\//g')
 ${GNU_SED} -i \
     -e "1 s/FROM.*/FROM ${GCI_REGEX_URL}\/buildpack-deps\:bullseye/; t" \
     -e "1,// s//FROM ${GCI_REGEX_URL}\/buildpack-deps\:bullseye/" \
-    1.56.1/bullseye/Dockerfile
+    1.57.0/bullseye/Dockerfile
+
+${GNU_SED} -i \
+    -e "1 s/FROM.*/FROM ${GCI_REGEX_URL}\/alpine\:3.14/; t" \
+    -e "1,// s//FROM ${GCI_REGEX_URL}\/alpine\:3.14/" \
+    1.57.0/alpine3.14/Dockerfile
 
 # Build
 
@@ -31,8 +36,11 @@ ${GNU_SED} -i \
 BUILD_PLATFORM=" --platform linux/amd64 "
 BUILD_ARGS=" ${BUILD_LABEL_ARG} ${BUILD_PLATFORM} "
 
-docker build 1.56.1/bullseye/ ${BUILD_ARGS} \
-    --tag ${GCI_URL}/rust:1.56.1-bullseye
+docker build 1.57.0/bullseye/ ${BUILD_ARGS} \
+    --tag ${GCI_URL}/rust:1.57.0-bullseye
+
+docker build 1.57.0/alpine3.14/ ${BUILD_ARGS} \
+    --tag ${GCI_URL}/rust:1.57.0-alpine3.14
 
 # Push
 
