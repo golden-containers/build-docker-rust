@@ -39,7 +39,7 @@ BUILD_ARGS=" ${BUILD_LABEL_ARG} ${BUILD_PLATFORM} "
 docker build 1.58.0/bullseye/ ${BUILD_ARGS} \
     --tag ${GCI_URL}/rust:1.58.0-bullseye
 
-docker build 1.57.0/alpine3.14/ ${BUILD_ARGS} \
+docker build 1.58.0/alpine3.14/ ${BUILD_ARGS} \
     --tag ${GCI_URL}/rust:1.58.0-alpine3.14
 
 # Push
